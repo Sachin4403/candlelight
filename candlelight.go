@@ -46,6 +46,7 @@ func ConfigureTracerProvider(v *viper.Viper, logger log.Logger, applicationName 
 	// added  this condition if traceProvider  is missing in properties file then v will be coming as nil
 	if v == nil {
 		return  errors.New("viper instance can't be nil")
+
 	}
 	var traceProviderName = v.GetString(traceProviderType)
 
@@ -88,7 +89,7 @@ func ConfigureTracerProvider(v *viper.Viper, logger log.Logger, applicationName 
 		otExporter, err := stdout.NewExporter(option)
 		if err != nil {
 			logger.Log("message", "failed to create stdout exporter", "err", err)
-			return err
+			return
 		}
 		traceProvider := sdktrace.NewTracerProvider(sdktrace.WithSyncer(otExporter))
 		otel.SetTracerProvider(traceProvider)
